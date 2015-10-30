@@ -1,12 +1,11 @@
 FROM debian
 MAINTAINER Franklyn Tackitt <frank@comanage.com>
 
-COPY ./wkhtmltox-0.12.2.4_linux-jessie-amd64.deb /tmp/wkhtmltox.deb
 
-RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache \
- && apt-get update \
- && apt-get upgrade -y \
- && apt-get install -y \
+RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
 # Development files
       apt-utils build-essential git software-properties-common \
 # Python libraries
@@ -22,13 +21,18 @@ RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache \
 # Fonts
       xfonts-base xfonts-75dpi \
 # Useful tools
-      postgresql-client-9.4 gnupg curl \
- && apt-get clean \
- && easy_install -U pip \
+      postgresql-client-9.4 gnupg curl && \
+    apt-get clean && \
+    rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+
+RUN easy_install -U pip
+
 # wkhtmltopdf-static, since we need the static version
- && dpkg -i /tmp/wkhtmltox.deb \
+COPY ./wkhtmltox-0.12.2.4_linux-jessie-amd64.deb /tmp/wkhtmltox.deb
+RUN dpkg -i /tmp/wkhtmltox.deb
+
 # Just install this now, since its a big build
- && pip install \
+RUN pip install \
       cryptography \
       newrelic \
       urllib3 \
