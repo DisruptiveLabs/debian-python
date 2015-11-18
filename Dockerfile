@@ -4,7 +4,6 @@ MAINTAINER Franklyn Tackitt <frank@comanage.com>
 
 RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y \
 # Development files
       apt-utils build-essential git software-properties-common \
@@ -17,7 +16,9 @@ RUN apt-get update && \
 # Nginx for wsgi socket handling
       nginx \
 # Libraries
-      libpq-dev fontconfig libfontconfig1 libfreetype6 libjpeg62-turbo libxrender1 libffi-dev postgresql-server-dev-9.4 \
+      libpq-dev fontconfig libfontconfig1 libfreetype6 libjpeg62-turbo \
+      libxml2-dev libxslt1-dev \
+      libxrender1 libffi-dev postgresql-server-dev-9.4 \
 # Fonts
       xfonts-base xfonts-75dpi \
 # Useful tools
@@ -31,12 +32,15 @@ RUN easy_install -U pip
 COPY ./wkhtmltox-0.12.2.4_linux-jessie-amd64.deb /tmp/wkhtmltox.deb
 RUN dpkg -i /tmp/wkhtmltox.deb
 
-# Just install this now, since its a big build
+# Just install these now, since they are long builds
 RUN pip install \
+      bcrypt \
+      cffi \
       cryptography \
-      newrelic \
-      urllib3 \
-      pyopenssl \
       ndg-httpsclient \
+      newrelic \
       pyasn1 \
-      six
+      pyopenssl \
+      six \
+      sqlalchemy \
+      urllib3
