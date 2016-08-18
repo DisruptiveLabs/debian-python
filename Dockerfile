@@ -6,7 +6,7 @@ RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 RUN apt-get update && \
     apt-get install -y \
 # Development files
-      apt-utils build-essential git software-properties-common \
+      apt-utils build-essential git hg software-properties-common \
 # Python libraries
       python python-dev python-setuptools \
 # uWSGI for hosting applications
