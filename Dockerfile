@@ -18,11 +18,11 @@ RUN apt-get update && \
 # Libraries
       libpq-dev fontconfig libfontconfig1 libfreetype6 libjpeg62-turbo \
       libxml2-dev libxslt1-dev \
-      libxrender1 libffi-dev postgresql-server-dev-9.4 \
+      libxrender1 libffi-dev postgresql-server-dev-9.5 \
 # Fonts
       xfonts-base xfonts-75dpi \
 # Useful tools
-      postgresql-client-9.4 gnupg curl && \
+      postgresql-client-9.5 gnupg curl && \
     apt-get clean && \
     rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
