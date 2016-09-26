@@ -1,8 +1,10 @@
 FROM debian
 MAINTAINER Franklyn Tackitt <frank@comanage.com>
 
-
-RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
+ADD https://www.postgresql.org/media/keys/ACCC4CF8.asc /tmp/ACCC4CF8.asc
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache && \
+    apt-key add /tmp/ACCC4CF8.asc
 RUN apt-get update && \
     apt-get install -y \
 # Development files
